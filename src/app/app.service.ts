@@ -12,12 +12,6 @@ export class CandidateService {
 
     getCandidateJobList(pageIndex: number, pageSize: number, searchText: string, sortBy: string, sortOrder: number): Observable<any> {
         let url = environment.endpoint + '/candidate?PageNumber=' + pageIndex + '&PageSize=' + pageSize;
-        if (pageIndex) {
-            url += '&PageNumber=' + pageIndex;
-        }
-        if (pageSize) {
-            url += '&PageSize=' + pageSize;
-        }
         if (sortBy) {
             url += '&SortBy=' + sortBy;
         }
