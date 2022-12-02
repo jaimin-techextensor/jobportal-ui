@@ -1,0 +1,227 @@
+<div
+    class="sm:absolute sm:inset-0 flex flex-col flex-auto min-w-0 sm:overflow-hidden bg-card dark:bg-transparent"
+>
+    <div class="flex-auto overflow-hidden sm:overflow-y-auto mt-5">
+        <div
+            class="sm:inset-0 flex flex-col flex-auto min-w-0 flex-auto overflow-hidden sm:overflow-y-auto bg-card dark:bg-transparent border-b border-t border-l border-r shadow-lg"
+        >
+            <div class="flex flex-auto items-center min-w-0">
+                <mat-icon class="icon-size-10">accessibility
+                </mat-icon>
+                <div class="flex flex-col min-w-0 ml-4">
+                    <ng-container>
+                        <div
+                            class="text-2xl md:text-3xl font-semibold tracking-tight leading-0 md:leading-snug truncate"
+                        >
+                            Jobs applied by candidates
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="flex shrink-0 items-center mt-6 sm:mt-8 sm:ml-4">
+                <mat-form-field
+                    class="fuse-mat-dense fuse-mat-no-subscript fuse-mat-rounded min-w-64"
+                >
+                    <mat-icon
+                        class="icon-size-5"
+                        matPrefix
+                        [svgIcon]="'heroicons_solid:search'"
+                    >
+                    </mat-icon>
+                    <input
+                        matInput
+                        [autocomplete]="'off'"
+                        [placeholder]="'Search'"
+                        [(ngModel)]="searchText"
+                        (ngModelChange)="getCandidateJobsList(null, true)"
+                        [ngModelOptions]="{ standalone: true }"
+                    />
+                </mat-form-field>
+                <button
+                    class="ml-4"
+                    mat-flat-button
+                    [color]="'primary'"
+                    [routerLink]="['/candidate']"
+                >
+                    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                    <span class="ml-2 mr-1">Apply for job</span>
+                </button>
+            </div>
+            <div class="flex flex-auto overflow-hidden">
+                <div
+                    class="flex flex-col flex-auto sm:mb-18 overflow-hidden sm:overflow-y-auto"
+                >
+                    <div class="grid">
+                        <table
+                            mat-table
+                            [dataSource]="dataSource"
+                            class="mat-elevation-z8"
+                            matSort
+                            matSortStart="desc"
+                            (matSortChange)="getCandidateJobsList($event)"
+                        >
+                            <ng-container matColumnDef="JobId">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Job
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div
+                                        class="flex flex-auto items-center min-w-5"
+                                    >
+                                        <span class="ml-1.5">{{
+                                            element?.jobId
+                                        }}</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Name">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Name
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div
+                                        class="flex flex-auto items-center min-w-5"
+                                    >
+                                        <span class="ml-1.5">{{
+                                            element?.name
+                                        }}</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="Email">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Email
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div
+                                        class="flex flex-auto items-center min-w-5"
+                                    >
+                                        <span class="ml-1.5">{{
+                                            element?.email
+                                        }}</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="PlaceOfBirth">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    mat-sort-header
+                                >
+                                    Place Of Birth
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div
+                                        class="flex flex-auto items-center min-w-5"
+                                    >
+                                        <span class="ml-1.5">{{
+                                            element?.placeOfBirth
+                                        }}</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="DateOfBirth">
+                                <th mat-header-cell *matHeaderCellDef>
+                                    Date Of Birth
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div
+                                        class="flex flex-auto items-center min-w-5"
+                                    >
+                                        <span class="ml-1.5">{{
+                                            element?.dateOfBirth | date: 'dd-MMM-yyyy'
+                                        }}</span>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Action">
+                                <th
+                                    mat-header-cell
+                                    *matHeaderCellDef
+                                    class="th-center"
+                                >
+                                    Action
+                                </th>
+                                <td
+                                    mat-cell
+                                    *matCellDef="let element"
+                                    class="th-center"
+                                >
+                                    <div class="hidden sm:block">
+                                        <a
+                                            mat-icon-button
+                                            (click)="
+                                                hidePdf = true;
+                                                openPdf(element.resume)
+                                            "
+                                        >
+                                            <mat-icon>remove_red_eye</mat-icon>
+                                        </a>
+                                        <a
+                                            mat-icon-button
+                                            (click)="
+                                                deleteCandidate(element.id)
+                                            "
+                                        >
+                                            <mat-icon
+                                                svgIcon="mat_solid:delete_outline"
+                                            >
+                                            </mat-icon>
+                                        </a>
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <tr
+                                mat-header-row
+                                *matHeaderRowDef="displayedColumns"
+                            ></tr>
+                            <tr
+                                mat-row
+                                *matRowDef="let row; columns: displayedColumns"
+                            ></tr>
+                        </table>
+
+                        <mat-paginator
+                            *ngIf="jobList.length > 0"
+                            class="sm:absolute sm:inset-x-0 sm:bottom-0 border-b sm:border-t sm:border-b-0 z-10 bg-gray-50 dark:bg-transparent coustom-paginator-box"
+                            [pageSizeOptions]="[5, 10, 15, 20]"
+                            [pageIndex]="request.pageNumber"
+                            [pageSize]="request.pageSize"
+                            (page)="getCandidateJobsList($event)"
+                            [length]="request.totalCount"
+                            showFirstLastButtons
+                        >
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ngx-extended-pdf-viewer
+            *ngIf="hidePdf"
+            #pdfViewer
+            [src]="pdfFile"
+            backgroundColor="#ffffff"
+            [height]="'90vh'"
+            [useBrowserLocale]="true"
+            [handTool]="false"
+            [showHandToolButton]="true"
+        >
+        </ngx-extended-pdf-viewer>
+    </div>
+</div>

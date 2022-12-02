@@ -1,0 +1,51 @@
+.form-container {
+    width: 100vw !important;
+    height: 100% !important;
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
+    background-color: #232f41 !important;
+    padding-bottom: 10px !important;
+}
+
+form {
+    width: 40vw !important;
+    background-color: #fff !important;
+    color: #000 !important;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cancel {
+    padding: 5px 10px;
+    border-radius: 15px;
+    background-color: #e64a4a;
+    color: #fff;
+}
+
+.submit {
+    background-color: green;
+}
+
+.file-input {
+    display: none;
+}
+
+label {
+    color: #fff !important;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.marggg {
+    margin-top: -15px !important;
+    margin-bottom: -10px !important;
+}
