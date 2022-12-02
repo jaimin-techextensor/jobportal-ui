@@ -35,6 +35,7 @@
                         [(ngModel)]="searchText"
                         (ngModelChange)="getCandidateJobsList(null, true)"
                         [ngModelOptions]="{ standalone: true }"
+                        #input
                     />
                 </mat-form-field>
                 <button
@@ -194,8 +195,14 @@
                             <tr
                                 mat-row
                                 *matRowDef="let row; columns: displayedColumns"
-                            ></tr>
-                        </table>
+                            ></tr> 
+                                <tr class="mat-row" *matNoDataRow>
+                                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                                </tr> 
+                            </table> 
+                           <div *ngIf="!dataSource" class="text-center mt-5 font-bold">
+                               {{errorMessage}} 
+                           </div>
 
                         <mat-paginator
                             *ngIf="jobList.length > 0"
